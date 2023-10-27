@@ -10,7 +10,7 @@ import Notiflix from 'notiflix';
 
 function addsaveContacts() {
   const saveContacts = localStorage.getItem('addContacts');
-  if(saveContacts !== null) {
+  if(saveContacts === null) {
     return [];
   }
  return JSON.parse(saveContacts);
@@ -29,11 +29,11 @@ const addContact  = (newContact) => {
     Notiflix.Notify.failure('this contact has already been added!');
     return
     }
-  setContacts(prevState => [...prevState.contacts, {...newContact, id: nanoid()}],
+  setContacts(prevState => [...prevState, {...newContact, id: nanoid()}],
  )};
 
 const deleteContact = (contactId) => {
- setContacts(prevState =>  prevState.contacts.filter(contact => contact.id !== contactId))
+ setContacts(prevState =>  prevState.filter(contact => contact.id !== contactId))
 }
 
 
@@ -58,7 +58,7 @@ return (
     <Filter 
     onChange = {onChangeFilter} filterName={filter}/>
     <ContactList 
-    contacts = {filterContacts}
+    contacts = {filterContacts()}
     onDeleteContact={deleteContact}
     />
     </ContactsContainer>
